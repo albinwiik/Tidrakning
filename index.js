@@ -42,13 +42,12 @@ btn.addEventListener('click', calculateDeltaTime)
 function setCalcCount(clicked) {
     if(typeof(Storage) !== 'undefined') {
         let calcTimes = Number(localStorage.getItem('timesCalculated'))
-        if(calcTimes === null) calcTimes = 0
 
         if(clicked) {
             calcTimes += 1
             localStorage.setItem('timesCalculated', calcTimes)
         }
-        timesCalculated.innerHTML = `Antal gånger genomfört beräkning: ${localStorage.getItem('timesCalculated')}`
+        timesCalculated.innerHTML = `Antal gånger genomfört beräkning: ${calcTimes}`
     }
 }
 
