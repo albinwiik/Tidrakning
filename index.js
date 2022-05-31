@@ -1,6 +1,5 @@
 
 
-
 const btn = document.querySelector('#calculate-btn')
 const startTime = document.querySelector('#start-time')
 const endTime = document.querySelector('#end-time')
@@ -13,41 +12,39 @@ endTime.value = "16:00"
 lunchBox.checked = true
 setCalcCount(false)
 
-function calculateHours(time) {
-    const hours = Number(time.slice(0,2))
-    const mins = Number(time.slice(3, 5)) / 60
-    return hours + mins
-}
+btn.addEventListener('click', calculateDeltaTime)
 
 function calculateDeltaTime() {
     const t1 = calculateHours(startTime.value)
     const t2 = calculateHours(endTime.value)
-    let dt = (t2 - t1);
+    let dt = t2 - t1
     if(lunchBox.checked) dt -= 0.5
 
     if(dt < 0) {
         result.innerHTML = 'Beräkningsfel! Beräkningen resulterar i en negativ tid.'
         result.classList = 'badge bg-danger'
     } else {
-        result.innerHTML = `Resultat: ${dt.toFixed(2)}h`;
+        result.innerHTML = `Resultat: ${dt.toFixed(2)}h`
         result.classList = ''
         setCalcCount(true)
-
     }
-
 }
 
-btn.addEventListener('click', calculateDeltaTime)
+function calculateHours(time) {
+    const hours = Number(time.slice(0,2))
+    const mins = Number(time.slice(3, 5)) / 60
+    return hours + mins
+}
 
-function setCalcCount(clicked) {
+function setCalcCount(increment) {
     if(typeof(Storage) !== 'undefined') {
-        let calcTimes = Number(localStorage.getItem('timesCalculated'))
+        let timesCalculated = Number(localStorage.getItem('timesCalculated'))
 
-        if(clicked) {
-            calcTimes += 1
-            localStorage.setItem('timesCalculated', calcTimes)
+        if(increment) {
+            timesCalculated += 1
+            localStorage.setItem('timesCalculated', timesCalculated)
         }
-        timesCalculated.innerHTML = `Antal gånger genomfört beräkning: ${calcTimes}`
+        timesCalculated.innerHTML = `Antal gånger genomfört beräkning: ${timesCalculated}`
     }
 }
 
